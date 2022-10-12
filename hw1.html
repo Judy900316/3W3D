@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+
+
+</style>
+</head>
+<body> 
+<h1> HW1</h1>
+<button id='power'>Power</button>
+<table background="https://img.my-best.tw/press_component/images/2f9ce8360d94cb2464fb39b211d0350a.jpg?ixlib=rails-4.2.0&q=70&lossless=0&w=690&fit=max" style="width:690px;height:528px;" border="1">
+
+<div id='bkgd' style="position:absolute; top: 10vh; left: 10vw; width:60vw; height: 60vh"></div>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script>
+var powerOn = true;
+
+$('#power').click (function() {
+  powerOn = !powerOn;
+  
+  if (powerOn === true) {  // false--> true
+     lamps.forEach (function(item) {item.startBlink();});
+  }
+});
+
+class Lamp {
+
+  constructor(name) {
+    this.name = name + Lamp.id++;
+    this.myStatus = false;
+    //文字
+    let el = document.createElement ('div');
+    el.id = this.name;
+    //let text = document.createTextNode (name + ' is OFF');
+    let text = document.createTextNode (' . ');
+    el.appendChild(text);
+    let bkgd = document.getElementById('bkgd');
+    bkgd.appendChild(el);
+    //this.hue = Math.random()*360;
+    // styles
+    //el.setAttribute ("style", `background-color: hsl(${this.hue}, 90%, 50%); width:10%`);
+    //this.left = Math.random()*0.8;//位置隨機
+    //this.top = Math.random()*0.8;
+    if (this.name == 'light0'){
+    	this.hue = 0;
+      // styles
+    	el.setAttribute ("style", `background-color: hsl(${this.hue}, 90%, 50%); width:10%`);
+    	this.left = 0.7
+    	this.top = 1
+      el.style.position = "absolute";
+      el.style.left = this.left*100 + '%'; 
+    	el.style.top = this.top*100 + '%';
+    }
+    if (this.name == 'light1'){
+    	this.hue = 64;
+      // styles
+    	el.setAttribute ("style", `background-color: hsl(${this.hue}, 90%, 50%); width:10%`);
+    	this.left = 0.8
+    	this.top = 0.5
+      el.style.position = "absolute";
+      el.style.left = this.left*100 + '%'; 
+    	el.style.top = this.top*100 + '%';
+    }
+    if (this.name == 'light2'){
+   	 	this.hue = 128;
+      // styles
+    	el.setAttribute ("style", `background-color: hsl(${this.hue}, 90%, 50%); width:10%`);
+    	this.left = 0.85
+    	this.top = 0.7
+      el.style.position = "absolute";
+      el.style.left = this.left*100 + '%'; 
+    	el.style.top = this.top*100 + '%';
+    }
+    if (this.name == 'light3'){
+   	 	this.hue = 256;
+      // styles
+    	el.setAttribute ("style", `background-color: hsl(${this.hue}, 90%, 50%); width:10%`);
+    	this.left = 0.9
+    	this.top = 1.3
+      el.style.position = "absolute";
+      el.style.left = this.left*100 + '%'; 
+    	el.style.top = this.top*100 + '%';
+    }
+    //el.style.position = "absolute";
+    //el.style.left = this.left*100 + '%'; 
+    //el.style.top = this.top*100 + '%';
+  }
+
+  toggle() {//變燈光的事情
+    this.myStatus = ! this.myStatus;
+    
+    if (powerOn) {
+       setTimeout (()=>{this.toggle();}, 500);
+    }
+    
+    if (this.myStatus === true) {
+      $('#'+this.name).css('backgroundColor', `hsl(${this.hue},90%,80%)`);//亮燈
+      //$('#'+this.name).text(this.name + ' is on');
+    } else {
+      $('#'+this.name).css('backgroundColor', `hsl(${this.hue},90%,24%)`);//關燈
+      //$('#'+this.name).text(this.name + ' is off');
+    }
+  }
+
+  startBlink() {
+    var that = this;
+/*   
+    setInterval(function() {
+      that.toggle();
+    }, 500);
+*/
+   setTimeout (()=>{ this.toggle(); }, 0);
+     
+    //setInterval (that.toggle, 500);   // somehow, it does not work
+  }
+}
+
+
+/*Lamp.id = 0; // class variable
+for (let i = 0; i < 3; i++) {
+   let ll = new Lamp ('light');
+   ll.startBlink();
+}*/
+Lamp.id = 0; // class variable
+lamps = [];
+
+for (let i = 0; i < 4; i++) {
+   let ll = new Lamp ('light');
+   lamps.push (ll);
+}
+
+lamps.forEach ( function(ll) {ll.startBlink();} );
+
+
+</script>
+</body>
+
+</html>
