@@ -95,7 +95,7 @@ class Lamp {
     this.myStatus = ! this.myStatus;
     
     if (powerOn) {
-       setTimeout (()=>{this.toggle();}, 500);
+       setTimeout (()=>{this.toggle();}, Math.random()*500);
     }
     
     if (this.myStatus === true) {
