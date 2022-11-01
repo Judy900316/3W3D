@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://threejs.org/build/three.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("#submit").click(function() {
+          var v = new THREE.Vector3(parseInt($('#startvx').val()), parseInt($('#startvy').val()), parseInt($('#startvz').val()));
+          var w = new THREE.Vector3(parseInt($('#startwx').val()), parseInt($('#startwy').val()), parseInt($('#startwz').val()));
+
+          var VinnerW = v.clone().dot(w);
+
+          var VcrossW = v.clone().crossVectors(v, w);
+          $("#inner").val(VinnerW);
+          $("#crossx").val(VcrossW.x);
+          $("#crossy").val(VcrossW.y);
+          $("#crossz").val(VcrossW.z);
+        });
+      });
+
+    </script>
+  </head>
+
+  <body>
+    <div style="width:98vw; height:60vw">
+      <div style="float:left;background:pink; width:49vw;height:49vw">
+        v
+        <br> x:<input type='text' id='startvx'>
+        <br> y:<input type='text' id='startvy'>
+        <br> z:<input type='text' id='startvz'><br><br>
+        w
+        <br> x:<input type='text' id='startwx'>
+        <br> y:<input type='text' id='startwy'>
+        <br> z:<input type='text' id='startwz'>
+        <br><br> <button type="submit" id='submit'>送出</button>
+      </div>
+      <div style="float:right;background:cyan; width:49vw;height:49vw">
+        inner product
+        <hr>
+        v．w = <input type='text' id='inner'><br><br>
+        v × w<br>
+        x:<input type='text' id='crossx'><br>
+        y:<input type='text' id='crossy'><br>
+        z:<input type='text' id='crossz'><br>
+
+      </div>
+    </div>
+  </body>
+
+</html>
