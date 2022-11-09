@@ -25,6 +25,8 @@ $('#power').click (function() {
   
   if (powerOn === true) {  // false--> true
      lamps.forEach (function(item) {item.startBlink();});
+     //setTimeout (()=>{ this.toggle(); }, 0);
+     //setTimeout (power, 0);
   }
 });
 
@@ -96,10 +98,11 @@ class Lamp {
     this.myStatus = ! this.myStatus;
     
     if (powerOn) {
-       setTimeout (()=>{this.toggle();}, Math.random()*500);
+       setTimeout (()=>{this.toggle();}, 500);
     }
     
     if (this.myStatus === true) {
+    	
       $('#'+this.name).css('backgroundColor', `hsl(${this.hue},90%,80%)`);//亮燈
       //$('#'+this.name).text(this.name + ' is on');
     } else {
