@@ -1,0 +1,77 @@
+<div id="info">hw5</div>
+<script src="https://threejs.org/build/three.min.js"></script>
+<script>
+  var camera, scene, renderer;
+  var circle, pos, vel;
+
+  init();
+  animate();
+
+  function init() {
+
+    scene = new THREE.Scene();
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x888888);
+    document.body.appendChild(renderer.domElement);
+
+    camera = new THREE.OrthographicCamera(-100, 100, 100, -100, -10, 100);
+    camera.position.z = 50;
+
+    ////////////////////////////////////////////////////////
+    var gridXZ = new THREE.GridHelper(200, 20, 'red', 'white');
+    gridXZ.rotation.x = Math.PI / 2;
+    scene.add(gridXZ);
+
+    let geometry = new THREE.BufferGeometry();
+    let points = [];
+    points.push(
+      new THREE.Vector3(-80, -80, 0),
+      new THREE.Vector3(80, -80, 0),
+      new THREE.Vector3(80, 80, 0),
+      new THREE.Vector3(-80, 80, 0),
+      new THREE.Vector3(-80, -80, 0));
+    geometry.setFromPoints(points);
+    var border = new THREE.Line(geometry, new THREE.LineBasicMaterial({
+      color: 'blue'
+    }));
+    scene.add(border);
+    ///木頭
+    var loader = new THREE.TextureLoader();
+    var woodTex = loader.load("https://i.imgur.com/p8CRm9W.jpg");
+    woodTex.repeat.set(2, 1);
+    woodTex.wrapS = THREE.RepeatWrapping;
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(20, 10), new THREE.MeshBasicMaterial({
+      map: woodTex
+    }));
+    scene.add(plane);
+    circle = new THREE.Mesh(new THREE.CircleGeometry(10, 20, 20), new THREE.MeshBasicMaterial({
+      color: 'yellow'
+    }));
+    scene.add(circle);
+
+    pos = new THREE.Vector3();
+    vel = new THREE.Vector3(10, 20);
+  }
+
+  function animate() {
+    var dt = 0.05;
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+
+    pos.add(vel.clone().multiplyScalar(dt));
+    if (pos.x > 70 || pos.x < -70)
+      vel.x *= -1;
+    if (pos.y > 70 || pos.y < -70)
+      vel.y *= -1;
+
+    if (pos.x > 0)
+      circle.material.color.set('cyan');
+    else
+      circle.material.color.set('yellow');
+
+    circle.position.copy(pos);
+  }
+
+</script>
